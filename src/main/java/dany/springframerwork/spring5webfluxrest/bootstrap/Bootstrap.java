@@ -29,30 +29,30 @@ public class Bootstrap implements CommandLineRunner{
 
             categoryRepository.save(Category.builder()
                     .description("Fruits")
-                    .build());
+                    .build()).block();
 
             categoryRepository.save(Category.builder()
                     .description("Nuts")
-                    .build());
+                    .build()).block();
 
             categoryRepository.save(Category.builder()
                     .description("Breads")
-                    .build());
+                    .build()).block();
 
             categoryRepository.save(Category.builder()
                     .description("Meatss")
-                    .build());
+                    .build()).block();
 
             categoryRepository.save(Category.builder()
                     .description("Eggs")
-                    .build());
+                    .build()).block();
 
             System.out.println("Loaded Categories" + categoryRepository.count().block());
 
             vendorRepository.save(Vendor.builder()
                     .firstName("Dany")
                     .lastName("Bautista")
-                    .build());
+                    .build()).block();
 
             vendorRepository.save(Vendor.builder()
                     .firstName("Jhony")
@@ -62,12 +62,12 @@ public class Bootstrap implements CommandLineRunner{
             vendorRepository.save(Vendor.builder()
                     .firstName("Lety")
                     .lastName("Gomez")
-                    .build());
+                    .build()).block();
 
             vendorRepository.save(Vendor.builder()
                     .firstName("Cristina")
                     .lastName("Ximenez")
-                    .build());
+                    .build()).block();
 
             System.out.println("Loaded Vendrs: " + vendorRepository.count().block());
 
