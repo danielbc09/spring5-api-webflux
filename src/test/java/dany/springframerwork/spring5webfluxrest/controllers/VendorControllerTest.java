@@ -7,12 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
+import org.reactivestreams.Publisher;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 
 /**
  * Created by bautisj on 4/23/2018.
@@ -67,4 +69,18 @@ public class VendorControllerTest {
                 .expectBody(Vendor.class);
     }
 
+    @Test
+    public void testCreateVendor(){
+        BDDMockito.given(vendorRepository.saveAll(any(Publisher.class)))
+                .willReturn(Flux.just(Vendor.builder().build()));
+
+        Mono<Vendor> vendorMono = Mono.just(vendor1);
+
+        webTestClient.post()
+                .uri(vendorController.BASE_URL)
+                .body(vendorMono, Vendor.class)
+                .exchange()
+                .expectStatus()
+                .isCreated();
+    }
 }
