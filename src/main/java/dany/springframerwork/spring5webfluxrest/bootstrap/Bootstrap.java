@@ -69,6 +69,11 @@ public class Bootstrap implements CommandLineRunner{
                     .lastName("Ximenez")
                     .build()).block();
 
+            vendorRepository.save(Vendor.builder()
+                    .firstName("Danielbc")
+                    .lastName("DADAD")
+                    .build()).block();
+
             System.out.println("Loaded Vendrs: " + vendorRepository.count().block());
 
         }
