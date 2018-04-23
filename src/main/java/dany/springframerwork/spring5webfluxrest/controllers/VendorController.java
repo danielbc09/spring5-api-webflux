@@ -1,6 +1,5 @@
 package dany.springframerwork.spring5webfluxrest.controllers;
 
-import dany.springframerwork.spring5webfluxrest.domain.Category;
 import dany.springframerwork.spring5webfluxrest.domain.Vendor;
 import dany.springframerwork.spring5webfluxrest.repositories.VendorRepository;
 import org.reactivestreams.Publisher;
@@ -36,5 +35,21 @@ public class VendorController {
     @PostMapping(BASE_URL)
     public Mono<Void> createNewVendor(@RequestBody Publisher<Vendor> vendorPublisher){
         return vendorRepository.saveAll(vendorPublisher).then();
+    }
+
+    @PutMapping(BASE_URL + "/{id}")
+    Mono<Vendor>  update(@PathVariable String id, @RequestBody Vendor vendor) {
+        vendor.setId(id);
+        return  vendorRepository.save(vendor);
+    }
+
+    @PatchMapping(BASE_URL +"/{id}")
+    Mono<Vendor> patch(@PathVariable String id, @RequestBody Vendor vendor) {
+        Vendor foundVendor = vendorRepository.findById(id).block();
+        if (!foundVendor.getFirstName().equals(vendor.getFirstName())){
+            foundVendor.setFirstName(vendor.getFirstName());
+            return  vendorRepository.save(foundVendor);
+        }
+        return Mono.just(vendor);
     }
 }
